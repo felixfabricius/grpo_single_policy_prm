@@ -1,0 +1,31 @@
+# Byte-compiled / caches
+__pycache__/
+*.py[cod]
+
+# Virtual envs
+.venv/
+venv/
+
+# Local runs & checkpoints
+runs/
+**/checkpoints/
+**/events.jsonl
+**/semantic_diversity.jsonl
+
+# HuggingFace caches (common local names)
+.cache/
+cache/
+hf_cache/
+~/.cache/huggingface
+
+# Datasets (keep paths external)
+data/raw/
+data/external/
+
+# OS/editor junk
+.DS_Store
+.idea/
+.vscode/
+
+# Misc
+*.log

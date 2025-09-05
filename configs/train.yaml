@@ -1,0 +1,78 @@
+# grpo_single_policy_prm/configs/train.yaml
+seed: 123
+run_id: "run_${now}"   # can be overridden by --run-id
+
+model_name: "Qwen/Qwen2.5-Math-1.5B"
+precision: "bf16"
+context_len: 4096
+grad_checkpointing: true
+
+lora:
+  r: 16
+  alpha: 32
+  dropout: 0.05
+  target_modules: ["q_proj","v_proj","o_proj"]
+
+gen:
+  N: 3
+  temperature: 0.7
+  top_p: 0.95
+  max_new_tokens: 256
+
+prm:
+  M: 2
+  use_unbiased_std: false  # sd_max: 0.5 (population) vs 0.5*sqrt(M/(M-1)) (unbiased)
+
+training_version: "a"  # "a" (outcome), "b" (+process), "c" (+process+uncertainty)
+
+adv:
+  alpha: 1.0
+  eps: 1.0e-6
+
+process:
+  apply_to_unspanned: "omit"   # or "reuse_last"
+  overflow_penalty: 0.05
+
+uncertainty:               # only used if version == "c"
+  scheme: "one_minus_pow"  # or "exp_quad", "rational"
+  gamma: 1.0
+  beta: 4.0
+  w_min: 0.2
+
+grpo:
+  beta: 0.10
+  epsilon_low: 0.2
+  epsilon_high: 0.28
+  loss_type: "plain"       # "plain" or "dapo"
+
+datasets:
+  mix: {gsm8k: 0.4, math: 0.3, omnimath: 0.2, olympiad: 0.1}
+  split: "train"
+  # Optional explicit paths (else use env vars DATA_GSM8K, etc.)
+  # paths:
+  #   gsm8k: "/path/to/gsm8k"
+  #   math: "/path/to/math"
+  #   omnimath: "/path/to/omnimath"
+  #   olympiad: "/path/to/olympiad"
+  jsonl_fallback:
+    - "grpo_single_policy_prm/data/local_eval/gsm8k_small.jsonl"
+
+optim:
+  lr: 2.0e-5
+  betas: [0.9, 0.95]
+  weight_decay: 0.0
+  warmup_steps: 50
+  grad_clip: 1.0
+
+batching:
+  prompts_per_step: 1
+  grad_accum_steps: 1   # (not used in this minimal trainer)
+
+logging:
+  log_every: 10
+  semantic_every_steps: 20
+  unc_log_every_steps: 50
+
+ckpt:
+  save_every: 25
+  keep_last: 3

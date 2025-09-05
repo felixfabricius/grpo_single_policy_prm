@@ -1,0 +1,6 @@
+# grpo_single_policy_prm/data/local_eval/gsm8k_small.jsonl
+{"example_id":"gsm8k_smoke_1","question":"Q: If Alice has 3 apples and buys 4 more, how many apples does she have?\nA:","answer":"7","meta":{"dataset":"jsonl_fallback","split":"train"}}
+{"example_id":"gsm8k_smoke_2","question":"Q: Compute 12 + 15.\nA:","answer":"27","meta":{"dataset":"jsonl_fallback","split":"train"}}
+{"example_id":"gsm8k_smoke_3","question":"Q: What is 20 - 5?\nA:","answer":"15","meta":{"dataset":"jsonl_fallback","split":"train"}}
+{"example_id":"gsm8k_smoke_4","question":"Q: Evaluate 6 * 7.\nA:","answer":"42","meta":{"dataset":"jsonl_fallback","split":"train"}}
+{"example_id":"gsm8k_smoke_5","question":"Q: What is 9 + 10?\nA:","answer":"19","meta":{"dataset":"jsonl_fallback","split":"train"}}
